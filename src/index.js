@@ -22,9 +22,10 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import "./assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/scss/argon-dashboard-react.scss";
+import "./assets/scss/Public/style.scss";
 import AdminLayout from './layouts/Admin';
 import Auth from "./layouts/Auth";
-import Home from "./Views/Public/Home";
+import PublicLayout from './layouts/Public/PublicLayout';
 
 
 ReactDOM.render(
@@ -32,7 +33,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Route path="/auth" render={(props) => <Auth {...props} />} />
-      <Route path="/" exact render={(props) => <Home {...props} />} />
+      <Route path="/" exact render={(props) => <PublicLayout {...props} />} />
       {/* <Redirect from="/" to="/admin/index" /> */}
       <Redirect from="/login" to="/auth/login" />
       <Redirect from="/resetPassword" to="/auth/resetPassword" />

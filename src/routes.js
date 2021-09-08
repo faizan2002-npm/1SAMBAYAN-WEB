@@ -35,9 +35,9 @@ var routes = [
     layout: "/auth",
   },
   {
-    path: "/home",
+    path: "/",
     name: "Home",
-    icon: "ni ni-key-25 text-info",
+    icon: "ni ni-tv-2 text-primary",
     component: Home,
     layout: "/public",
   },
