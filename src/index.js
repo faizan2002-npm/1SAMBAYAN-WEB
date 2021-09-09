@@ -21,6 +21,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import "./assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+// (window.location.href.indexOf("admin") < -1)?:''
 import "./assets/scss/argon-dashboard-react.scss";
 import "./assets/scss/Public/style.scss";
 import AdminLayout from './layouts/Admin';

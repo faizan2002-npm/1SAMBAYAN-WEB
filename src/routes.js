@@ -3,9 +3,9 @@ import Login from "./Views/Auth/Login";
 import Home from "./Views/Public/Home";
 import useDocumentTitle from './useDocumentTitle';
 import siteSettings from "./Constants/Admin/siteSettings";
-import ForgetPassword from './Views/Auth/ForgetPassword';
-import OTPAuthentication from './Views/Auth/OTPAuthentication';
-import EditProfile from './Views/Admin/EditProfile';
+import ForgetPassword from './Views/Auth/Forget.js';
+import OTPAuthentication from './Views/Auth/OTP';
+import EditProfile from './Views/Admin/Profile';
 
 function _Dashboard() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Dashboard`)
@@ -43,13 +43,13 @@ var routes = [
     component: _Dashboard,
     layout: "/admin",
   },
-  // {
-  //   path: "/EditProfile",
-  //   name: "Edit Profile",
-  //   icon: "ni ni-tv-2 text-primary",
-  //   component: _EditProfile,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/EditProfile",
+    name: "Edit Profile",
+    icon: "ni ni-tv-2 text-primary",
+    component: _EditProfile,
+    layout: "/admin",
+  },
   {
     path: "/login",
     name: "Login",
