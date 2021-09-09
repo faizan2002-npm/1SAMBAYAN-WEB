@@ -47,6 +47,7 @@ const Auth = (props) => {
 
       if (prop.layout === "/auth") {
         console.log(prop.component);
+
         return (
           <Route
             path={prop.layout + prop.path}
@@ -83,6 +84,13 @@ const Auth = (props) => {
                     <p className="text-lead text-white">
                       Please enter your email address we will sent you password recovery email.
                     </p>
+                  </> : (location.pathname === '/auth/otpAuthentication') ? <>
+                    <h1 className="text-white">
+                      Please enter OTP
+                    </h1>
+                    <p className="text-lead text-white">
+                      Please enter the OTP that has been sent on your Email Address
+                    </p>
                   </> : ''
                   }
 
@@ -111,6 +119,9 @@ const Auth = (props) => {
           <Row className="justify-content-center">
             <Switch>
               {getRoutes(routes)}
+              <Redirect from="/auth" to="/auth/Login" />
+              <Redirect from="/auth/*" to="/auth/Login" />
+
               {/* <Redirect from="*" to="/auth/login" /> */}
             </Switch>
           </Row>

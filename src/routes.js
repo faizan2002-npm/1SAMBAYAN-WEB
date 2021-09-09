@@ -1,44 +1,81 @@
 import Dashboard from "./Views/Admin/Dashboard";
-import editProfile from "./Views/Admin/editProfile";
-import forgetPassword from "./Views/Auth/forgetPassword";
 import Login from "./Views/Auth/Login";
 import Home from "./Views/Public/Home";
+import useDocumentTitle from './useDocumentTitle';
+import siteSettings from "./Constants/Admin/siteSettings";
+import OTPAuthentication from './Views/Auth/OTPAuthentication';
+import EditProfile from './Views/Admin/EditProfile';
+import ForgetPassword from './Views/Auth/ForgetPassword';
 
+function _Dashboard() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Dashboard`)
+  return <Dashboard />
+}
+
+function _editProfile() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Edit Profile`)
+  return <EditProfile />
+}
+
+function _Login() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Login`)
+  return <Login/>
+}
+
+function _forgetPassword() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Forget Password`)
+  return <ForgetPassword />
+}
+function _optAuthentication() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | OTP Authentication`)
+  return <OTPAuthentication />
+}
+function _Home() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Home`)
+  return <Home />
+}
 
 var routes = [
   {
     path: "/index",
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
-    component: Dashboard,
+    component: _Dashboard,
     layout: "/admin",
   },
   {
     path: "/editProfile",
     name: "Edit Profile",
     icon: "ni ni-tv-2 text-primary",
-    component: editProfile,
+    component: _editProfile,
     layout: "/admin",
   },
   {
     path: "/login",
     name: "Login",
     icon: "ni ni-key-25 text-info",
-    component: Login,
+    component: _Login,
+    layout: "/auth",
+  },
+  {
+    path: "/otpAuthentication",
+    name: "OTP Authentication",
+    icon: "ni ni-key-25 text-info",
+    component: _optAuthentication,
     layout: "/auth",
   },
   {
     path: "/resetPassword",
     name: "Forget Password",
     icon: "ni ni-key-25 text-info",
-    component: forgetPassword,
+    component: _forgetPassword,
     layout: "/auth",
   },
   {
     path: "/",
     name: "Home",
     icon: "ni ni-tv-2 text-primary",
-    component: Home,
+    component: _Home,
     layout: "/public",
   },
 ];
