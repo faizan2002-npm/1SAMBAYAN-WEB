@@ -3,9 +3,9 @@ import Login from "./Views/Auth/Login";
 import Home from "./Views/Public/Home";
 import useDocumentTitle from './useDocumentTitle';
 import siteSettings from "./Constants/Admin/siteSettings";
-// import OTPAuthentication from './Views/Auth/OTPAuthentication';
-// import EditProfile from './Views/Admin/EditProfile';
-// import ForgetPassword from './Views/Auth/ForgetPassword';
+import ForgetPassword from './Views/Auth/ForgetPassword';
+import OTPAuthentication from './Views/Auth/OTPAuthentication';
+import EditProfile from './Views/Admin/EditProfile';
 
 function _Dashboard() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Dashboard`)
@@ -14,7 +14,7 @@ function _Dashboard() {
 
 function _EditProfile() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Edit Profile`)
-  // return <EditProfile />
+  return <EditProfile />
 }
 
 function _Login() {
@@ -24,11 +24,11 @@ function _Login() {
 
 function _ForgetPassword() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Forget Password`)
-  // return <ForgetPassword />
+  return <ForgetPassword />
 }
 function _OTPAuthentication() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | OTP Authentication`)
-  // return <OTPAuthentication />
+  return <OTPAuthentication />
 }
 function _Home() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Home`)
