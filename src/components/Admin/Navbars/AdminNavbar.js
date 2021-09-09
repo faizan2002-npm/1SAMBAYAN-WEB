@@ -15,7 +15,6 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import siteSettings from "../../../Constants/Admin/siteSettings";
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
@@ -23,12 +22,6 @@ import {
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  Form,
-  FormGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Input,
-  InputGroup,
   Navbar,
   Nav,
   Container,

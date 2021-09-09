@@ -1,9 +1,7 @@
-import { useState } from "react";
 // reactstrap components
 import {
   Button,
   Card,
-  CardHeader,
   CardBody,
   FormGroup,
   Form,
@@ -14,11 +12,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import siteSettings from "../../Constants/Admin/siteSettings";
-import useDocumentTitle from '../../useDocumentTitle';
-
 const ForgetPassword = (props) => {
-  // useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Forget Password`);
 
   return (
     <>

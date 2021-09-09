@@ -12,7 +12,7 @@ function _Dashboard() {
   return <Dashboard />
 }
 
-function _editProfile() {
+function _EditProfile() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Edit Profile`)
   return <EditProfile />
 }
@@ -22,11 +22,11 @@ function _Login() {
   return <Login/>
 }
 
-function _forgetPassword() {
+function _ForgetPassword() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Forget Password`)
   return <ForgetPassword />
 }
-function _optAuthentication() {
+function _OTPAuthentication() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | OTP Authentication`)
   return <OTPAuthentication />
 }
@@ -44,10 +44,10 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/editProfile",
+    path: "/EditProfile",
     name: "Edit Profile",
     icon: "ni ni-tv-2 text-primary",
-    component: _editProfile,
+    component: _EditProfile,
     layout: "/admin",
   },
   {
@@ -61,14 +61,14 @@ var routes = [
     path: "/otpAuthentication",
     name: "OTP Authentication",
     icon: "ni ni-key-25 text-info",
-    component: _optAuthentication,
+    component: _OTPAuthentication,
     layout: "/auth",
   },
   {
     path: "/resetPassword",
     name: "Forget Password",
     icon: "ni ni-key-25 text-info",
-    component: _forgetPassword,
+    component: _ForgetPassword,
     layout: "/auth",
   },
   {

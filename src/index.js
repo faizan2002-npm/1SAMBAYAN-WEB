@@ -26,7 +26,6 @@ import "./assets/scss/Public/style.scss";
 import AdminLayout from './layouts/Admin';
 import Auth from "./layouts/Auth";
 import PublicLayout from './layouts/Public/PublicLayout';
-import useDocumentTitle from './useDocumentTitle'
 
 
 
@@ -36,7 +35,6 @@ ReactDOM.render(
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Route path="/auth" render={(props) => <Auth {...props} />} />
       <Route path="/" exact render={(props) => <PublicLayout {...props} />} />
-      {/* <Redirect from="/" to="/admin/index" /> */}
       <Redirect from="/login" to="/auth/login" />
       <Redirect from="/otpAuthentication" to="/auth/otpAuthentication" />
       <Redirect from="/resetPassword" to="/auth/resetPassword" />
@@ -44,7 +42,6 @@ ReactDOM.render(
       <Redirect from="/public/home" to="/" />
       <Redirect from="/home" to="/" />
       <Redirect from="/auth" to="/auth/login" />
-      {/* <Route path="/auth" render={(props) => <AuthLayout {...props} />} /> */}
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")

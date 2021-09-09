@@ -1,27 +1,16 @@
 
-import { useState } from "react";
 // reactstrap components
 import {
-  Button,
   Card,
   CardHeader,
-  CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
   Table,
   Container,
   Row,
   Col,
 } from "reactstrap";
 import Header from "../../components/Admin/Headers/Header";
-import siteSettings from "../../Constants/Admin/siteSettings";
-import useDocumentTitle from '../../useDocumentTitle';
 
 const Dashboard = (props) => {
-  // useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Dashboard`);
-
   return (
     <>
       <Header />

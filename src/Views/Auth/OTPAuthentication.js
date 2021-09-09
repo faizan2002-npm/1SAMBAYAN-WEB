@@ -1,25 +1,14 @@
-import { useState } from "react";
 import OtpInput from "react-otp-input";
 // reactstrap components
 import {
     Button,
     Card,
-    CardHeader,
     CardBody,
-    FormGroup,
     Form,
-    Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
-    Row,
     Col,
 } from "reactstrap";
-import siteSettings from "../../Constants/Admin/siteSettings";
-import useDocumentTitle from '../../useDocumentTitle';
 
 const OTPAuthentication = (props) => {
-    // useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Forget Password`);
 
     return (
         <>
