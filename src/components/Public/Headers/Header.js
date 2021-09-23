@@ -1,56 +1,50 @@
 import React from 'react'
+import siteSettings from "../../../Constants/Admin/siteSettings";
+import { Navbar, Container, Nav, Image } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import routes from '../../../routes';
 
 const Header = () => {
+    const getRoutes = (routes) => {
+        routes.sort((a, b) => (a.order > b.order) ? 1 : -1)
+        return routes.map((prop, key) => {
+            if (prop.layout === "" && prop.show === 'yes') {
+                if (prop.name === 'Home') {
+                    return (
+                        <Nav.Item as="li" key={key}>
+                            <Link className="nav-link" to={prop.layout + prop.path}>{prop.name}</Link>
+                        </Nav.Item>
+                    );
+                } else {
+                    return (
+                        <Nav.Item as="li" key={key}>
+                            <Link className="nav-link" to={prop.layout + prop.path}>{prop.name}</Link>
+                        </Nav.Item>
+                    );
+                }
+            } else {
+                return null;
+            }
+        });
+    };
     return (
         <>
             <header id="header">
-                <div className="container">
-                    <nav className="navbar navbar-expand-lg navbar-dark">
-                        <a className="navbar-brand" href="index.html">
-                            <img src="img/logo.png" alt=""  className="img-fluid" />
-                        </a>
-                        <button className="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul className="navbar-nav ml-auto">
-                                <li className="nav-item">
-                                    <a className="nav-link" href="index.html">Home</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#">About us</a>
-                                </li>
-                                <li className="nav-item">
-
-                                    <a className="nav-link" href="#">Events</a>
-                                </li>
-                                <li className="nav-item">
-
-                                    <a className="nav-link" href="#">Communities</a>
-                                </li>
-                                <li className="nav-item">
-
-                                    <a className="nav-link" href="#">Account</a>
-                                </li>
-                                <li className="nav-item">
-
-                                    <a className="nav-link" href="#">Donate</a>
-                                </li>
-                                <li className="nav-item">
-
-                                    <a className="nav-link" href="#">Login</a>
-                                </li>
-                                <li className="nav-item">
-
-                                    <a className="nav-link" href="#"><img src="img/search.png" alt="img"/></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
+                <Container fluid>
+                    <Navbar as="nav" variant="dark" expand="lg">
+                        <Link className="navbar-brand" to="/">
+                            <Image src={siteSettings.SiteSettings[0].SITE_LOGO} alt="" fluid />
+                        </Link>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="ml-auto" as="ul">
+                                {
+                                    getRoutes(routes)
+                                }
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
+                </Container>
             </header>
         </>
     )

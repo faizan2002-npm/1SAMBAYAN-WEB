@@ -1,21 +1,4 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-/*eslint-disable*/
 import { useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
@@ -23,35 +6,21 @@ import { PropTypes } from "prop-types";
 
 // reactstrap components
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
   Collapse,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  FormGroup,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
   Media,
   NavbarBrand,
   Navbar,
   NavItem,
   NavLink,
   Nav,
-  Progress,
-  Table,
   Container,
   Row,
   Col,
 } from "reactstrap";
-import siteSettings from "../../../Constants/Admin/siteSettings";
 import images from "../../../Constants/Admin/images";
 
 var ps;
@@ -150,7 +119,7 @@ const Sidebar = (props) => {
                 <span>My profile</span>
               </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              <DropdownItem to="#pablo" onClick={(e) => e.preventDefault()}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>
               </DropdownItem>
@@ -230,7 +199,7 @@ Sidebar.propTypes = {
     // it will be rendered as <Link to="...">...</Link> tag
     innerLink: PropTypes.string,
     // outterLink is for links that will direct the user outside the app
-    // it will be rendered as simple <a href="...">...</a> tag
+    // it will be rendered as simple <a to="...">...</a> tag
     outterLink: PropTypes.string,
     // the image src of the logo
     imgSrc: PropTypes.string.isRequired,

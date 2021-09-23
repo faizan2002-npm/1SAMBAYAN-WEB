@@ -5,7 +5,8 @@ import {
   Navbar,
   Container,
 } from "reactstrap";
-import Images from "../../../Constants/Auth/images";
+import siteSettings from "../../../Constants/Admin/siteSettings";
+
 const AdminNavbar = () => {
   return (
     <>
@@ -14,7 +15,7 @@ const AdminNavbar = () => {
           <NavbarBrand to="/" tag={Link}>
             <img
               alt="..."
-              src={Images.LOGO}
+              src={siteSettings.SiteSettings[0].SITE_LOGO}
             />
           </NavbarBrand>
          </Container>

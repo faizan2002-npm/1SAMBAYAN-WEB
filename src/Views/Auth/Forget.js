@@ -47,7 +47,7 @@ import {
             <Col className="text-center" xs="12">
               <a
                 className="text-light"
-                href="/login"
+                to="/login"
               >
                 <small>Back to Login</small>
               </a>
