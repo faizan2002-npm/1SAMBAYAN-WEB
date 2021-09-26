@@ -13,6 +13,7 @@ import AdminNavbar from '../../components/Admin/Navbars/AdminNavbar';
 import "../../assets/plugins/nucleo/css/nucleo.css"
 import "@fortawesome/fontawesome-free/css/all.min.css"
 import "../../assets/scss/argon-dashboard-react.scss"
+import "../../assets/scss/custom.scss"
 
 
 const Admin = (props) => {
@@ -28,13 +29,13 @@ const Admin = (props) => {
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
-        console.log([
-          {
-              'path':prop.layout + prop.path,
-              "component":prop.component,
-              "key":key
-          }
-      ]);
+        if(prop.subMenu){
+          return prop.subMenu.map((prop, key) => {
+            return (
+              <Route exact path={prop.layout + prop.path} component={prop.component} key={key} />
+            );
+          });
+        }
         return (
           <Route
             path={prop.layout + prop.path}

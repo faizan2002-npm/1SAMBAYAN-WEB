@@ -22,7 +22,9 @@ import {
   Col,
 } from "reactstrap";
 import images from "../../../Constants/Admin/images";
-
+import {
+  Dropdown
+} from "react-bootstrap";
 var ps;
 
 const Sidebar = (props) => {
@@ -40,21 +42,57 @@ const Sidebar = (props) => {
     setCollapseOpen(false);
   };
   // creates the links that appear in the left menu / Sidebar
-  const createLinks = (routes) => {
+  const createLinks = (routes, type) => {
     return routes.map((prop, key) => {
-      return (
-        <NavItem key={key}>
-          <NavLink
-            to={prop.layout + prop.path}
-            tag={NavLinkRRD}
-            onClick={closeCollapse}
-            activeClassName="active"
-          >
-            <i className={prop.icon} />
-            {prop.name}
-          </NavLink>
-        </NavItem>
-      );
+      if (prop.layout === "/admin" && prop.type === type) {
+        return (
+          <NavItem key={key}>
+            <NavLink
+              to={prop.layout + prop.path}
+              tag={NavLinkRRD}
+              onClick={closeCollapse}
+              activeClassName="active"
+            >
+              <i className={prop.icon} />
+              {prop.name}
+            </NavLink>
+          </NavItem>
+        );
+      }
+    });
+  };
+  const nestedLinks = (routes, type) => {
+    return routes.map((prop, key) => {
+      if (prop.layout === "/admin" && prop.type === type && prop.subMenu) {
+        return (
+          <>
+            <Dropdown className="nav-item" as="li" key={key}>
+              <Dropdown.Toggle as="a" className="nav-link d-block" id="dropdown-basic">
+                <i className={prop.icon} />
+                {prop.name}
+              </Dropdown.Toggle>
+              <Dropdown.Menu as="ul">
+                {prop.subMenu.map((prop, key) => {
+                  return (
+                    <NavItem key={key}>
+                      <Dropdown.Item
+                        to={prop.layout + prop.path}
+                        as={NavLinkRRD}
+                      // onClick={closeCollapse}
+                      // activeClassName="active"
+                      >
+                        <i className={prop.icon} />
+                        {prop.name}
+                      </Dropdown.Item>
+                    </NavItem>
+                  );
+                })
+                }
+              </Dropdown.Menu>
+            </Dropdown>
+          </>
+        );
+      }
     });
   };
 
@@ -114,7 +152,7 @@ const Sidebar = (props) => {
               <DropdownItem className="noti-title" header tag="div">
                 <h6 className="text-overflow m-0">Welcome!</h6>
               </DropdownItem>
-              <DropdownItem to="/editProfile" tag={Link}>
+              <DropdownItem to="admin/EditProfile" tag={Link}>
                 <i className="ni ni-single-02" />
                 <span>My profile</span>
               </DropdownItem>
@@ -172,15 +210,19 @@ const Sidebar = (props) => {
               </InputGroupAddon>
             </InputGroup>
           </Form> */}
-          {/* Navigation */}
-          <Nav navbar>{createLinks(routes)}</Nav>
-          {/* Divider */}
-          {/* <hr className="my-3" /> */}
-          {/* Heading */}
-          {/* <h6 className="navbar-heading text-muted">Documentation</h6> */}
-          {/* Navigation */}
-          
-          
+
+          <Nav navbar>{createLinks(routes, 'portal')}</Nav>
+          <hr className="my-3" />
+          <h6 className="navbar-heading text-muted">Post Hierarchy</h6>
+          <Nav id="post_type_navbar" navbar>{nestedLinks(routes, 'post_type')}</Nav>
+          <hr className="my-3" />
+          <h6 className="navbar-heading text-muted">Page Settings</h6>
+          <Nav navbar>{createLinks(routes, 'PAGE_SETTINGS')}</Nav>
+          <hr className="my-3" />
+          <h6 className="navbar-heading text-muted">CMS Settings</h6>
+          <Nav navbar>{createLinks(routes, 'SETTINGS')}</Nav>
+
+
         </Collapse>
       </Container>
     </Navbar>

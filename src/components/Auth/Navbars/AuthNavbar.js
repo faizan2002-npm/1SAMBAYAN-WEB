@@ -1,4 +1,5 @@
 
+import { Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {
   NavbarBrand,
@@ -13,12 +14,14 @@ const AdminNavbar = () => {
       <Navbar className="navbar-top" expand="md">
         <Container className="px4 mb-5 justify-content-center">
           <NavbarBrand to="/" tag={Link}>
-            <img
+            <Image
               alt="..."
               src={siteSettings.SiteSettings[0].SITE_LOGO}
+              fluid
+              className="w-50 mx-auto d-block"
             />
           </NavbarBrand>
-         </Container>
+        </Container>
       </Navbar>
     </>
   );

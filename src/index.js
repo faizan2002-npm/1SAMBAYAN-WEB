@@ -11,13 +11,13 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 // console.log(window.location.pathname);
 const getRoutes = (routes) => {
   return routes.map((prop, key) => {
-    console.log([
-      {
-        'path': prop.layout + prop.path,
-        "component": prop.component,
-        "key": key
-      }
-    ]);
+    if(prop.subMenu){
+      return prop.subMenu.map((prop, key) => {
+        return (
+          <Route exact path={prop.layout + prop.path} component={prop.component} key={key} />
+        );
+      });
+    }
     return (
       <Route exact path={prop.layout + prop.path} component={prop.component} key={key} />
     );
@@ -35,7 +35,7 @@ ReactDOM.render(
       }
 
       {/* <Route component={NotFound} /> */}
-      <Redirect from="/editProfile" to="/admin/editProfile" />
+      <Redirect from="/editProfile" to="/admin/EditProfile" />
       <Redirect from="/auth" to="/auth/login" />
       <Redirect from="/login" to="/auth/login" />
       <Redirect from="/resetPassword" to="/auth/resetPassword" />

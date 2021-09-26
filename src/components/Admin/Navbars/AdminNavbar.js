@@ -45,7 +45,7 @@ const AdminNavbar = (props) => {
                 <DropdownItem className="noti-title" header tag="div">
                   <h6 className="text-overflow m-0">Welcome Admin!</h6>
                 </DropdownItem>
-                <DropdownItem to="/editProfile" tag={Link}>
+                <DropdownItem to="/admin/EditProfile" tag={Link}>
                   <i className="ni ni-single-02" />
                   <span>My profile</span>
                 </DropdownItem>

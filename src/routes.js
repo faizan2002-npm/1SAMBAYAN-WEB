@@ -1,9 +1,9 @@
 import siteSettings from "./Constants/Admin/siteSettings";
 import useDocumentTitle from './useDocumentTitle';
 import Dashboard from "./Views/Admin/Dashboard";
-import HomeSetting from './Views/Admin/HomeSetting';
+import HomeSetting from './Views/Admin/Settings/HomeSetting';
 import EditProfile from './Views/Admin/Profile';
-import SiteSettingPage from './Views/Admin/SiteSettingPage';
+import SiteSettingPage from './Views/Admin/Settings/SiteSettingPage';
 import Login from "./Views/Auth/Login";
 import ForgetPassword from './Views/Auth/Forget.js';
 import OTPAuthentication from './Views/Auth/OTP';
@@ -24,6 +24,26 @@ import LegalInformation from './Views/Public/LegalInformation';
 import FAQ from './Views/Public/FAQ';
 import TermCondition from "./Views/Public/TermCondition";
 import ActRegulations from './Views/Public/ActRegulations';
+import AboutSetting from './Views/Admin/Settings/AboutSetting';
+import EventsSetting from './Views/Admin/Settings/EventsSetting';
+import ConvenorsSetting from './Views/Admin/Settings/ConvenorsSetting';
+import SingleConvenorsSetting from './Views/Admin/Settings/SingleConvenorsSetting';
+import AccountSetting from './Views/Admin/Settings/AccountSetting';
+import SelectionProcessSetting from './Views/Admin/Settings/SelectionProcessSetting';
+import MemberOrganizationSetting from './Views/Admin/Settings/MemberOrganizationSetting';
+import HowToParticipateSetting from './Views/Admin/Settings/HowToParticipateSetting';
+import ContactUsSetting from './Views/Admin/Settings/ContactUsSetting';
+import InTheNewsSetting from './Views/Admin/Settings/InTheNewsSetting';
+import ListPost from './Views/Admin/Posts/ListPost';
+import ListParty from './Views/Admin/Parties/ListParty';
+import ListCandidate from './Views/Admin/Candidates/ListCandidate';
+import ListCommunity from './Views/Admin/Communities/ListCommunity';
+import ListEvent from './Views/Admin/Events/ListEvent';
+import CreatePost from './Views/Admin/Posts/CreatePost';
+import CreateEvent from './Views/Admin/Events/CreateEvent';
+import CreateCommunity from './Views/Admin/Communities/CreateCommunity';
+// import CreateCandidate from './Views/Admin/Candidates/CreateCandidate';
+import CreateParty from './Views/Admin/Parties/CreateParty';
 
 function _Dashboard() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Dashboard`)
@@ -121,35 +141,88 @@ function _ActRegulation() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Act and Regulation`)
   return <ActRegulations />
 }
+function _AboutSetting() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | About Page Settings`)
+  return <AboutSetting />
+}
+function _EventsSetting() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Events Page Settings`)
+  return <EventsSetting />
+}
+function _ConvenorsSetting() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Convenors Page Settings`)
+  return <ConvenorsSetting />
+}
+function _SingleConvenorsSetting() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Single Convenor Page Settings`)
+  return <SingleConvenorsSetting />
+}
+function _AccountSetting() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Account Page Settings`)
+  return <AccountSetting />
+}
+function _SelectionProcessSetting() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Selection Process Page Settings`)
+  return <SelectionProcessSetting />
+}
+function _MemberOrganizationSetting() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Member Organization Page Settings`)
+  return <MemberOrganizationSetting />
+}
+function _HowToParticipateSetting() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | How To Participate Page Settings`)
+  return <HowToParticipateSetting />
+}
+function _ContactUsSetting() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Contact Us Page Settings`)
+  return <ContactUsSetting />
+}
+function _InTheNewsSetting() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | In The News Page Settings`)
+  return <InTheNewsSetting />
+}
+function _ListPost() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | All Posts`)
+  return <ListPost />
+}
+function _CreatePost() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Add New Post`)
+  return <CreatePost />
+}
+function _ListEvent() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | All Event`)
+  return <ListEvent />
+}
+function _CreateEvent() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Add New Event`)
+  return <CreateEvent/>
+}
+function _ListCommunity() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | All Community`)
+  return <ListCommunity />
+}
+function _CreateCommunity() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Add New Community`)
+  return <CreateCommunity/>
+}
+function _ListCandidates() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | All Candidate`)
+  return <ListCandidate />
+}
+function _CreateCandidate() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Add New Candidate`)
+  // return <CreateCandidate/>
+}
+function _ListParties() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | All Parties`)
+  return <ListParty />
+}
+function _CreateParty() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Add New Party`)
+  return <CreateParty/>
+}
 var routes = [
-  {
-    path: "/index",
-    name: "Dashboard",
-    icon: "ni ni-tv-2 text-primary",
-    component: _Dashboard,
-    layout: "/admin",
-  },
-  {
-    path: "/EditProfile",
-    name: "Edit Profile",
-    icon: "ni ni-tv-2 text-primary",
-    component: _EditProfile,
-    layout: "/admin",
-  },
-  {
-    path: "/HomeSetting",
-    name: "Home Setting",
-    icon: "ni ni-tv-2 text-primary",
-    component: _HomeSetting,
-    layout: "/admin",
-  },
-  {
-    path: "/SiteSetting",
-    name: "Site Setting",
-    icon: "ni ni-tv-2 text-primary",
-    component: _SiteSettingPage,
-    layout: "/admin",
-  },
+  //Auth
   {
     path: "/login",
     name: "Login",
@@ -171,6 +244,271 @@ var routes = [
     component: _ForgetPassword,
     layout: "/auth",
   },
+  //Admin Portal
+  {
+    path: "/index",
+    name: "Dashboard",
+    icon: "ni ni-tv-2 text-primary",
+    component: _Dashboard,
+    layout: "/admin",
+    type: 'portal',
+    order: 1,
+  },
+  {
+    path: "/EditProfile",
+    name: "Edit Profile",
+    icon: "ni ni-single-02 text-yellow",
+    component: _EditProfile,
+    layout: "/admin",
+    type: 'portal',
+    order: 2,
+  },
+  //Post Hierarchy
+  {
+    path: "",
+    name: "Posts",
+    icon: "fas fa-paperclip text-primary",
+    component: _ListPost,
+    layout: "/admin",
+    type: 'post_type',
+    order: 1,
+    subMenu: [
+      {
+        path: "/ListPost",
+        name: "All Posts",
+        icon: "ni ni-single-02 text-yellow",
+        component: _ListPost,
+        layout: "/admin",
+        order: 1,
+      },
+      {
+        path: "/CreatePost",
+        name: "Add Post",
+        icon: "ni ni-single-02 text-yellow",
+        component: _CreatePost,
+        layout: "/admin",
+        order: 2,
+      },
+    ]
+  },
+  {
+    path: "",
+    name: "Events",
+    icon: "fas fa-paperclip text-danger",
+    component: _ListEvent,
+    layout: "/admin",
+    type: 'post_type',
+    order: 2,
+    subMenu: [
+      {
+        path: "/ListEvent",
+        name: "All Events",
+        icon: "ni ni-single-02 text-yellow",
+        component: _ListEvent,
+        layout: "/admin",
+        order: 1,
+      },
+      {
+        path: "/CreateEvent",
+        name: "Add Event",
+        icon: "ni ni-single-02 text-yellow",
+        component: _CreateEvent,
+        layout: "/admin",
+        order: 2,
+      },
+    ]
+  },
+  {
+    path: "",
+    name: "Communities",
+    icon: "fas fa-paperclip text-success",
+    component: _ListCommunity,
+    layout: "/admin",
+    type: 'post_type',
+    order: 3,
+    subMenu: [
+      {
+        path: "/ListCommunity",
+        name: "All Communities",
+        icon: "ni ni-single-02 text-yellow",
+        component: _ListCommunity,
+        layout: "/admin",
+        order: 1,
+      },
+      {
+        path: "/CreateCommunity",
+        name: "Add Community",
+        icon: "ni ni-single-02 text-yellow",
+        component: _CreateCommunity,
+        layout: "/admin",
+        order: 2,
+      },
+    ]
+  },
+  {
+    path: "",
+    name: "Candidates",
+    icon: "fas fa-paperclip text-info",
+    component: _ListCandidates,
+    layout: "/admin",
+    type: 'post_type',
+    order: 4,
+    subMenu: [
+      {
+        path: "/ListCandidates",
+        name: "All Candidates",
+        icon: "ni ni-single-02 text-yellow",
+        component: _ListCommunity,
+        layout: "/admin",
+        order: 1,
+      },
+      {
+        path: "/CreateCandidate",
+        name: "Add Candidate",
+        icon: "ni ni-single-02 text-yellow",
+        component: _CreateCandidate,
+        layout: "/admin",
+        order: 2,
+      },
+    ]
+  },
+  {
+    path: "",
+    name: "Parties",
+    icon: "fas fa-paperclip text-default",
+    component: _ListParties,
+    layout: "/admin",
+    type: 'post_type',
+    order: 5,
+    subMenu: [
+      {
+        path: "/ListParties",
+        name: "All Parties",
+        icon: "ni ni-single-02 text-yellow",
+        component: _ListParties,
+        layout: "/admin",
+        order: 1,
+      },
+      {
+        path: "/CreateParty",
+        name: "Add Party",
+        icon: "ni ni-single-02 text-yellow",
+        component: _CreateParty,
+        layout: "/admin",
+        order: 2,
+      },
+    ]
+  },
+  //Admin SETTINGS
+  {
+    path: "/HomeSetting",
+    name: "Home",
+    icon: "ni ni-settings  text-danger",
+    component: _HomeSetting,
+    layout: "/admin",
+    type: 'PAGE_SETTINGS',
+    order: 1,
+  },
+  {
+    path: "/AboutSetting",
+    name: "About Us",
+    icon: "ni ni-settings text-default",
+    component: _AboutSetting,
+    layout: "/admin",
+    type: 'PAGE_SETTINGS',
+    order: 2,
+  },
+  {
+    path: "/EventsSetting",
+    name: "Events",
+    icon: "ni ni-settings text-primary",
+    component: _EventsSetting,
+    layout: "/admin",
+    type: 'PAGE_SETTINGS',
+    order: 3,
+  },
+  {
+    path: "/ConvenorsSetting",
+    name: "Convenors",
+    icon: "ni ni-settings text-success",
+    component: _ConvenorsSetting,
+    layout: "/admin",
+    type: 'PAGE_SETTINGS',
+    order: 4,
+  },
+  {
+    path: "/SingleConvenorsSetting",
+    name: "Single Convenors",
+    icon: "ni ni-settings text-info",
+    component: _SingleConvenorsSetting,
+    layout: "/admin",
+    type: 'PAGE_SETTINGS',
+    order: 5,
+  },
+  {
+    path: "/AccountSetting",
+    name: "Account",
+    icon: "ni ni-settings text-yellow",
+    component: _AccountSetting,
+    layout: "/admin",
+    type: 'PAGE_SETTINGS',
+    order: 6,
+  },
+  {
+    path: "/SelectionProcessSetting",
+    name: "Selection Process",
+    icon: "ni ni-settings text-success",
+    component: _SelectionProcessSetting,
+    layout: "/admin",
+    type: 'PAGE_SETTINGS',
+    order: 7,
+  },
+  {
+    path: "/MemberOrganizationSetting",
+    name: "Member Organization",
+    icon: "ni ni-settings text-default",
+    component: _MemberOrganizationSetting,
+    layout: "/admin",
+    type: 'PAGE_SETTINGS',
+    order: 8,
+  },
+  {
+    path: "/HowToParticipateSetting",
+    name: "How To Participate",
+    icon: "ni ni-settings text-primary",
+    component: _HowToParticipateSetting,
+    layout: "/admin",
+    type: 'PAGE_SETTINGS',
+    order: 9,
+  },
+  {
+    path: "/ContactUsSetting",
+    name: "Contact Us",
+    icon: "ni ni-settings text-info",
+    component: _ContactUsSetting,
+    layout: "/admin",
+    type: 'PAGE_SETTINGS',
+    order: 10,
+  },
+  {
+    path: "/InTheNewsSetting",
+    name: "In The News",
+    icon: "ni ni-settings  text-danger",
+    component: _InTheNewsSetting,
+    layout: "/admin",
+    type: 'PAGE_SETTINGS',
+    order: 11,
+  },
+  {
+    path: "/SiteSetting",
+    name: "Site",
+    icon: "ni ni-settings-gear-65 text-success",
+    component: _SiteSettingPage,
+    layout: "/admin",
+    type: 'SETTINGS',
+    order: 12,
+  },
+  //Public Pages
   {
     path: "/",
     name: "Home",
@@ -178,7 +516,7 @@ var routes = [
     component: _Home,
     layout: "",
     show: "no",
-    order: 1,
+    order: 12,
   },
   {
     path: "/about",
@@ -269,10 +607,6 @@ var routes = [
     layout: "",
     show: "no",
   },
-
-
-
-
   {
     path: "/PrivacyPolicy",
     name: "Privacy Policy",
@@ -280,35 +614,40 @@ var routes = [
     component: _privacyPolicy,
     layout: "",
     show: "no",
-  }, {
+  },
+  {
     path: "/Disclaimer",
     name: "Disclaimer",
     icon: "ni ni-tv-2 text-primary",
     component: _Disclaimer,
     layout: "",
     show: "no",
-  }, {
+  },
+  {
     path: "/LegalInformation",
     name: "Legal Information",
     icon: "ni ni-tv-2 text-primary",
     component: _LegalInformation,
     layout: "",
     show: "no",
-  }, {
+  },
+  {
     path: "/FAQ",
     name: "FAQ",
     icon: "ni ni-tv-2 text-primary",
     component: _FAQ,
     layout: "",
     show: "no",
-  }, {
+  },
+  {
     path: "/TermsConditions",
     name: "Terms & Conditions",
     icon: "ni ni-tv-2 text-primary",
     component: _TermsConditions,
     layout: "",
     show: "no",
-  }, {
+  },
+  {
     path: "/ActRegulation",
     name: "Act and Regulation",
     icon: "ni ni-tv-2 text-primary",

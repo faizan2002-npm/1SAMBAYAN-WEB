@@ -32,7 +32,7 @@ const Auth = (props) => {
     return routes.map((prop, key) => {
 
       if (prop.layout === "/auth") {
-        console.log(prop.component);
+        // console.log(prop.component);
 
         return (
           <Route
