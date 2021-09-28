@@ -11,8 +11,11 @@ import {
   Media,
 } from "reactstrap";
 import images from "../../../Constants/Admin/images";
+import { useHistory } from "react-router-dom";
 
 const AdminNavbar = (props) => {
+  const history = useHistory();
+
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -50,7 +53,10 @@ const AdminNavbar = (props) => {
                   <span>My profile</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem to="#pablo" onClick={(e) => e.preventDefault()}>
+                <DropdownItem to="#pablo" onClick={() => {
+                  localStorage.removeItem("TOKEN");
+                  history.push("/login");
+                }}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>

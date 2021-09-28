@@ -1,6 +1,6 @@
-import images from "./images";
 
-// import Images from "./Images";
+// console.log("SiteSettingsFunction",SiteSettingsFunction.length);
+import images from "./images";
 const SiteSettings = [
     {
         __SITE_ID: '007',
@@ -15,7 +15,13 @@ const SiteSettings = [
         Site_Link: "#",
         Copyright_text: `@${new Date().getFullYear()} 1SAMBAYAN`,
     },
-];
+    ];
+
+// export default {
+//     SiteSettings,
+// };
+// export default siteSettingsFunction
+
 export default {
     SiteSettings,
 };

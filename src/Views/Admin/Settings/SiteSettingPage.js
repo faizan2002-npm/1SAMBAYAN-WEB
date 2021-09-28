@@ -1,23 +1,67 @@
 import React, { useState } from 'react';
-import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, FormGroup, Label, Input, CardHeader, CardBody } from 'reactstrap';
+import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col, FormGroup, Label, CardHeader, CardBody } from 'reactstrap';
 import classnames from 'classnames';
 import { Editor } from "@tinymce/tinymce-react";
 import Header from '../../../components/Admin/Headers/Header';
+import { Form, Formik, Field as Input } from 'formik';
+import EditorField from '../../../components/Admin/EditorFormik.d';
+import { getRequest, putRequest } from './../../../api/request';
+import { useEffect } from 'react';
 
 const SiteSettingPage = () => {
     const [activeTab, setActiveTab] = useState('1');
+    const [siteSettings, setSiteSettings] = useState();
 
+    const getSiteSetting = async () => {
+        try {
+            const token = localStorage.getItem("TOKEN");
+            // console.log("token", token);
+            // var params = props.location.search.slice(5);
+            const response = await getRequest(
+                `/api/secure/site/`,
+                token
+            );
+            setSiteSettings({
+                aboutSite: response.result.data.site[0].footer,
+                city: response.result.data.site[0].address.city,
+                street: response.result.data.site[0].address.street,
+                latitude: response.result.data.site[0].address.latitude,
+                longitude: response.result.data.site[0].address.longitude,
+                zip: response.result.data.site[0].zip,
+                copyright: response.result.data.site[0].copyright,
+                videoURL: response.result.data.site[0].videoURL,
+                loop: response.result.data.site[0].video.videoSettings.loop,
+                controls: response.result.data.site[0].video.videoSettings.controls,
+                autoPlay: response.result.data.site[0].video.videoSettings.autoPlay,
+                muted: response.result.data.site[0].video.videoSettings.muted,
+                siteEmail: response.result.data.site[0].email,
+                siteLogo: response.result.data.site[0].logo,
+                siteOwner: response.result.data.site[0].siteOwner,
+                sitePhone: response.result.data.site[0].phone,
+                siteSlogan: response.result.data.site[0].slogan,
+                siteTitle: response.result.data.site[0].name,
+                siteURL: response.result.data.site[0].url,
+                fbUrl: response.result.data.site[0].socialMediaLinks.Facebook,
+                twUrl: response.result.data.site[0].socialMediaLinks.Twitter,
+                igUrl: response.result.data.site[0].socialMediaLinks.Instagram,
+                waUrl: response.result.data.site[0].socialMediaLinks.LinkedIn
+            });
+            // console.log("siteSettings", siteSettings);
+
+            // console.log("Get Site Setting Response", response.result.data.site[0].video.videoSettings);
+        } catch (error) {
+            console.log("Get Site Setting Error", error);
+        }
+    };
+
+    useEffect(() => {
+        getSiteSetting();
+    }, []);
     const toggle = tab => {
         if (activeTab !== tab) setActiveTab(tab);
     }
     return (
         <>
-            {/* <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
-                <Container fluid>
-                    <div className="header-body"></div>
-                </Container>
-            </div> */}
-
             <Header />
             <Container className="mt--7" fluid>
                 <Row className="mt-5">
@@ -30,7 +74,7 @@ const SiteSettingPage = () => {
                                             className={classnames({ active: activeTab === '1' })}
                                             onClick={() => { toggle('1'); }}
                                         >
-                                            Header Setting
+                                            Side Core
                                         </NavLink>
                                     </NavItem>
                                     <NavItem>
@@ -38,7 +82,7 @@ const SiteSettingPage = () => {
                                             className={classnames({ active: activeTab === '2' })}
                                             onClick={() => { toggle('2'); }}
                                         >
-                                            Site Setting
+                                            Site Info
                                         </NavLink>
                                     </NavItem>
                                     <NavItem>
@@ -49,236 +93,206 @@ const SiteSettingPage = () => {
                                             Footer Setting
                                         </NavLink>
                                     </NavItem>
-                                    <NavItem>
-                                        <NavLink
-                                            className={classnames({ active: activeTab === '4' })}
-                                            onClick={() => { toggle('4'); }}
-                                        >
-                                            Privacy Policy
-                                        </NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink
-                                            className={classnames({ active: activeTab === '5' })}
-                                            onClick={() => { toggle('5'); }}
-                                        >
-                                            Disclaimer
-                                        </NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink
-                                            className={classnames({ active: activeTab === '6' })}
-                                            onClick={() => { toggle('6'); }}
-                                        >
-                                            Term & Condition
-                                        </NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink
-                                            className={classnames({ active: activeTab === '7' })}
-                                            onClick={() => { toggle('7'); }}
-                                        >
-                                            FAQ
-                                        </NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink
-                                            className={classnames({ active: activeTab === '8' })}
-                                            onClick={() => { toggle('8'); }}
-                                        >
-                                            Legal information
-                                        </NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink
-                                            className={classnames({ active: activeTab === '9' })}
-                                            onClick={() => { toggle('9'); }}
-                                        >
-                                            Act and Regulations
-                                        </NavLink>
-                                    </NavItem>
+
                                 </Nav>
                             </CardHeader>
                             <CardBody>
-                                <TabContent activeTab={activeTab}>
-                                    <TabPane tabId="1">
+                                <Formik
+                                    enableReinitialize={true}
+                                    initialValues={siteSettings}
+                                    // values={siteSettings}
+                                    onSubmit={async (values) => {
+                                        const token = localStorage.getItem("TOKEN");
+                                        const APIresponse = {
+                                            props: {
+                                                name: values.siteTitle,
+                                                email: values.siteEmail,
+                                                phone: values.sitePhone,
+                                                owner: values.siteOwner,
+                                                address: {
+                                                    city: values.city,
+                                                    street: values.street,
+                                                    latitude: values.latitude,
+                                                    longitude: values.longitude,
+                                                    zip: values.zip
+                                                },
+                                                video: {
+                                                    videoURL: '',
+                                                    videoSettings: {
+                                                        loop: false,
+                                                        controls: false,
+                                                        autoPlay: false,
+                                                        muted: false
+                                                    },
+                                                },
+                                                address: {
+                                                    street: values.street,
+                                                    city: values.city,
+                                                    zip: values.zip,
+                                                    latitude: values.latitude,
+                                                    longitude: values.longitude,
+                                                },
+                                                footer: values.aboutSite,
+                                                url: values.siteURL,
+                                                slogan: values.siteSlogan,
+                                                copyright: values.copyright,
+                                                logo: values.siteLogo,
+                                                socialMediaLinks: {
+                                                    Facebook: values.fbUrl,
+                                                    Twitter: values.twUrl,
+                                                    Instagram: values.igUrl,
+                                                    LinkedIn: values.waUrl,
+                                                }
+                                            }
+                                        };
+                                        try {
+                                            const response = await putRequest(
+                                                "/api/secure/site/update-site",
+                                                token,
+                                                APIresponse
+                                            );
+
+                                            console.log("Site ", response);
+                                            if (response.result.status === 200) {
+                                                alert('Updated');
+                                            }
+                                        } catch (error) {
+                                            console.log("Set Site Setting error", error.message);
+                                        }
+                                    }}
+                                >
+                                    <Form>
+                                        <TabContent activeTab={activeTab}>
+                                            <TabPane tabId="1">
+                                                <Row>
+                                                    <Col lg={6} md={6} xs={12}>
+                                                        <FormGroup>
+                                                            <Label for="exampleFile">Site Title</Label>
+                                                            <Input type="text" name="siteTitle" id="siteTitle" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                    <Col lg={6} md={6} xs={12}>
+                                                        <FormGroup>
+                                                            <Label for="exampleFile">Site URL</Label>
+                                                            <Input type="text" name="siteURL" id="siteURL" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                    <Col lg={6} md={6} xs={12}>
+                                                        <FormGroup>
+                                                            <Label for="exampleFile">Site Slogan</Label>
+                                                            <Input type="text" name="siteSlogan" id="siteSlogan" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                    <Col lg={6} md={6} xs={12}>
+                                                        <FormGroup>
+                                                            <Label for="exampleFile">Site Logo</Label>
+                                                            <Input type="file" name="siteLogo" id="siteLogo" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                </Row>
+                                            </TabPane>
+                                            <TabPane tabId="2">
+                                                <Row>
+                                                    <Col md={6} xs={12}>
+                                                        <FormGroup>
+                                                            <Label >Site Email</Label>
+                                                            <Input type="email" name="siteEmail" placeholder="" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                    <Col md={6} xs={12}>
+                                                        <FormGroup>
+                                                            <Label >Site Phone</Label>
+                                                            <Input type="tel" name="sitePhone" placeholder="" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                    <Col md={6} xs={12}>
+                                                        <FormGroup>
+                                                            <Label >Instagram URL</Label>
+                                                            <Input type="url" name="igUrl" placeholder="" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                    <Col md={6} xs={12}>
+                                                        <FormGroup>
+                                                            <Label >Facebook URL</Label>
+                                                            <Input type="url" name="fbUrl" placeholder="" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                    <Col md={6} xs={12}>
+                                                        <FormGroup>
+                                                            <Label >Twitter URL</Label>
+                                                            <Input type="url" name="twUrl" placeholder="" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                    <Col md={6} xs={12}>
+                                                        <FormGroup>
+                                                            <Label >Whatapp URL</Label>
+                                                            <Input type="url" name="waUrl" placeholder="" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                    <Col md={4} xs={12}>
+                                                        <FormGroup>
+                                                            <Label >Street</Label>
+                                                            <Input type="text" name="street" placeholder="" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                    <Col md={4} xs={12}>
+                                                        <FormGroup>
+                                                            <Label >City</Label>
+                                                            <Input type="text" name="city" placeholder="" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                    <Col md={4} xs={12}>
+                                                        <FormGroup>
+                                                            <Label >Zip</Label>
+                                                            <Input type="text" name="zip" placeholder="" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                    <Col md={6} xs={12}>
+                                                        <FormGroup>
+                                                            <Label >Latitude</Label>
+                                                            <Input type="text" name="latitude" placeholder="" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                    <Col md={6} xs={12}>
+                                                        <FormGroup>
+                                                            <Label >Longitude</Label>
+                                                            <Input type="text" name="longitude" placeholder="" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                </Row>
+                                            </TabPane>
+                                            <TabPane tabId="3">
+                                                <Row>
+                                                    <Col xs={12}>
+                                                        <FormGroup>
+                                                            <Label >Footer About</Label>
+                                                            <EditorField
+                                                                name="aboutSite"
+                                                                init={{
+                                                                    plugins: 'autolink link image lists print preview',
+                                                                    toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+                                                                }}
+                                                            />
+                                                        </FormGroup>
+                                                    </Col>
+                                                    <Col xs={12}>
+                                                        <FormGroup>
+                                                            <Label >Site Copyright</Label>
+                                                            <Input type="text" name="copyright" placeholder="" className="form-control" />
+                                                        </FormGroup>
+                                                    </Col>
+                                                </Row>
+                                            </TabPane>
+                                        </TabContent>
                                         <Row>
-                                            <Col xl={12}>
-                                                <FormGroup>
-                                                    <Label for="exampleFile">Site Logo</Label>
-                                                    <Input type="file" name="siteLogo" id="siteLogo" />
-                                                </FormGroup>
-                                            </Col>
-                                            <Col xl={12}>
-                                                <FormGroup>
-                                                    <Label >Site URL</Label>
-                                                    <Input type="url" name="siteUrl" placeholder="" />
-                                                </FormGroup>
+                                            <Col className="text-center mt-5" xs={12}>
+                                                <Button type="submit" color="success" outline>
+                                                    Save
+                                                </Button>
                                             </Col>
                                         </Row>
-                                    </TabPane>
-                                    <TabPane tabId="2">
-                                        <Row>
-                                            <Col xl={12}>
-                                                <FormGroup>
-                                                    <Label >Instagram URL</Label>
-                                                    <Input type="url" name="igUrl" placeholder="" />
-                                                </FormGroup>
-                                                <FormGroup>
-                                                    <Label >Twitter URL</Label>
-                                                    <Input type="url" name="twUrl" placeholder="" />
-                                                </FormGroup>
-                                                <FormGroup>
-                                                    <Label >Twitter URL</Label>
-                                                    <Input type="url" name="twUrl" placeholder="" />
-                                                </FormGroup>
-                                                <FormGroup>
-                                                    <Label >Whatapp URL</Label>
-                                                    <Input type="url" name="waUrl" placeholder="" />
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                    </TabPane>
-                                    <TabPane tabId="3">
-                                        <Row>
-                                            <Col xl={12}>
-                                                <FormGroup>
-                                                    <Label >Footer About</Label>
-                                                    <Editor
-                                                        initialValue="<p>Sambayan is broad condition of democratic forcers reprsentaing the broad spesctrum od legitimate political persuasion in the Philippines. It aims to usher in a compotont,trustworthy administration in May 2022 national electrion by feilding a single state of national candidates: president, vice prisident and 12 senators.</p>
-                                                        <p>&nbsp;</p>
-                                                        <p>The mivement begun September 2020. when economic recaession and unemployment due to tje COVID-19 panademic had set in, in the number of infeations kept rising and the incumbent administration had shown itself incapable of a sensible effective response to the crises.</p>"
-                                                        init={{
-                                                            plugins: 'autolink link image lists print preview',
-                                                            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
-                                                        }}
-                                                        onChange={(e) => { console.log(e.target.getContent()); }}
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                            <Col xl={12}>
-                                                <FormGroup>
-                                                    <Label >Site Copyright</Label>
-                                                    <Input type="url" name="siteSetting" placeholder="" />
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                    </TabPane>
-                                    <TabPane tabId="4">
-                                        <Row>
-                                            <Col xl={12}>
-                                                <FormGroup>
-                                                    <Label >Privacy Policy</Label>
-                                                    <Editor
-                                                        initialValue="<p>Sambayan is broad condition of democratic forcers reprsentaing the broad spesctrum od legitimate political persuasion in the Philippines. It aims to usher in a compotont,trustworthy administration in May 2022 national electrion by feilding a single state of national candidates: president, vice prisident and 12 senators.</p>
-                                                        <p>&nbsp;</p>
-                                                        <p>The mivement begun September 2020. when economic recaession and unemployment due to tje COVID-19 panademic had set in, in the number of infeations kept rising and the incumbent administration had shown itself incapable of a sensible effective response to the crises.</p>"
-                                                        init={{
-                                                            plugins: 'autolink link image lists print preview',
-                                                            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
-                                                        }}
-                                                        onChange={(e) => { console.log(e.target.getContent()); }}
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                    </TabPane>
-                                    <TabPane tabId="5">
-                                        <Row>
-                                            <Col xl={12}>
-                                                <FormGroup>
-                                                    <Label >Disclaimer</Label>
-                                                    <Editor
-                                                        initialValue="<p>Sambayan is broad condition of democratic forcers reprsentaing the broad spesctrum od legitimate political persuasion in the Philippines. It aims to usher in a compotont,trustworthy administration in May 2022 national electrion by feilding a single state of national candidates: president, vice prisident and 12 senators.</p>
-                                                        <p>&nbsp;</p>
-                                                        <p>The mivement begun September 2020. when economic recaession and unemployment due to tje COVID-19 panademic had set in, in the number of infeations kept rising and the incumbent administration had shown itself incapable of a sensible effective response to the crises.</p>"
-                                                        init={{
-                                                            plugins: 'autolink link image lists print preview',
-                                                            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
-                                                        }}
-                                                        onChange={(e) => { console.log(e.target.getContent()); }}
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                    </TabPane>
-                                    <TabPane tabId="6">
-                                        <Row>
-                                            <Col xl={12}>
-                                                <FormGroup>
-                                                    <Label >Term & Condition</Label>
-                                                    <Editor
-                                                        initialValue="<p>Sambayan is broad condition of democratic forcers reprsentaing the broad spesctrum od legitimate political persuasion in the Philippines. It aims to usher in a compotont,trustworthy administration in May 2022 national electrion by feilding a single state of national candidates: president, vice prisident and 12 senators.</p>
-                                                        <p>&nbsp;</p>
-                                                        <p>The mivement begun September 2020. when economic recaession and unemployment due to tje COVID-19 panademic had set in, in the number of infeations kept rising and the incumbent administration had shown itself incapable of a sensible effective response to the crises.</p>"
-                                                        init={{
-                                                            plugins: 'autolink link image lists print preview',
-                                                            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
-                                                        }}
-                                                        onChange={(e) => { console.log(e.target.getContent()); }}
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                    </TabPane>
-                                    <TabPane tabId="7">
-                                        <Row>
-                                            <Col xl={12}>
-                                                <FormGroup>
-                                                    <Label >FAQ</Label>
-                                                    <Editor
-                                                        initialValue="<p>Sambayan is broad condition of democratic forcers reprsentaing the broad spesctrum od legitimate political persuasion in the Philippines. It aims to usher in a compotont,trustworthy administration in May 2022 national electrion by feilding a single state of national candidates: president, vice prisident and 12 senators.</p>
-                                                        <p>&nbsp;</p>
-                                                        <p>The mivement begun September 2020. when economic recaession and unemployment due to tje COVID-19 panademic had set in, in the number of infeations kept rising and the incumbent administration had shown itself incapable of a sensible effective response to the crises.</p>"
-                                                        init={{
-                                                            plugins: 'autolink link image lists print preview',
-                                                            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
-                                                        }}
-                                                        onChange={(e) => { console.log(e.target.getContent()); }}
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                    </TabPane>
-                                    <TabPane tabId="8">
-                                        <Row>
-                                            <Col xl={12}>
-                                                <FormGroup>
-                                                    <Label >Legal information</Label>
-                                                    <Editor
-                                                        initialValue="<p>Sambayan is broad condition of democratic forcers reprsentaing the broad spesctrum od legitimate political persuasion in the Philippines. It aims to usher in a compotont,trustworthy administration in May 2022 national electrion by feilding a single state of national candidates: president, vice prisident and 12 senators.</p>
-                                                        <p>&nbsp;</p>
-                                                        <p>The mivement begun September 2020. when economic recaession and unemployment due to tje COVID-19 panademic had set in, in the number of infeations kept rising and the incumbent administration had shown itself incapable of a sensible effective response to the crises.</p>"
-                                                        init={{
-                                                            plugins: 'autolink link image lists print preview',
-                                                            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
-                                                        }}
-                                                        onChange={(e) => { console.log(e.target.getContent()); }}
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                    </TabPane>
-                                    <TabPane tabId="9">
-                                        <Row>
-                                            <Col xl={12}>
-                                                <FormGroup>
-                                                    <Label >Act and Regulations</Label>
-                                                    <Editor
-                                                        initialValue="<p>Sambayan is broad condition of democratic forcers reprsentaing the broad spesctrum od legitimate political persuasion in the Philippines. It aims to usher in a compotont,trustworthy administration in May 2022 national electrion by feilding a single state of national candidates: president, vice prisident and 12 senators.</p>
-                                                        <p>&nbsp;</p>
-                                                        <p>The mivement begun September 2020. when economic recaession and unemployment due to tje COVID-19 panademic had set in, in the number of infeations kept rising and the incumbent administration had shown itself incapable of a sensible effective response to the crises.</p>"
-                                                        init={{
-                                                            plugins: 'autolink link image lists print preview',
-                                                            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
-                                                        }}
-                                                        onChange={(e) => { console.log(e.target.getContent()); }}
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                    </TabPane>
-                                </TabContent>
+                                    </Form>
+                                </Formik>
                             </CardBody>
                         </Card>
                     </Col>

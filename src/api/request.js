@@ -1,7 +1,9 @@
 const axios = require("axios");
 const qs = require("querystring");
-
-const baseURL = "https://sambayan1.herokuapp.com/";
+//DEV
+const baseURL = "http://localhost:3000";
+//Production
+// const baseURL = "https://sambayan-dev.herokuapp.com";
 
 export const postRequest = async (url, body = {}, headers = {}) => {
   let xform = qs.stringify(body);
@@ -106,7 +108,7 @@ export const getRequest = async (url, token, params = {}, headers = {}) => {
 
 export const putRequest = async (url, token, body = {}, headers = {}) => {
   // let xform = qs.stringify(body)
-
+// console.log(xform);
   let config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -118,7 +120,7 @@ export const putRequest = async (url, token, body = {}, headers = {}) => {
   let returnValue;
 
   await axios
-    .put(baseURL + url, {}, config)
+    .put(baseURL + url, body, config)
     .then((result) => {
       returnValue = { result: result, error: null };
     })

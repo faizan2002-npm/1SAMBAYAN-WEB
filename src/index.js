@@ -8,10 +8,11 @@ import PublicLayout from './layouts/Public/PublicLayout';
 import routes from "./routes";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import { createBrowserHistory } from 'history'
 // console.log(window.location.pathname);
 const getRoutes = (routes) => {
   return routes.map((prop, key) => {
-    if(prop.subMenu){
+    if (prop.subMenu) {
       return prop.subMenu.map((prop, key) => {
         return (
           <Route exact path={prop.layout + prop.path} component={prop.component} key={key} />
@@ -23,6 +24,15 @@ const getRoutes = (routes) => {
     );
   });
 };
+
+// const getPostsAPIRoutes = (APIRoutes) => {
+//   return routes.map((prop, key) => {
+//     return (
+//       <Route exact path={prop.layout + prop.path} component={prop.component} key={key} />
+//     );
+//   });
+// };
+
 ReactDOM.render(
 
   <BrowserRouter>
@@ -33,7 +43,9 @@ ReactDOM.render(
       {
         getRoutes(routes)
       }
-
+      {
+        // getPostsAPIRoutes(routes)
+      }
       {/* <Route component={NotFound} /> */}
       <Redirect from="/editProfile" to="/admin/EditProfile" />
       <Redirect from="/auth" to="/auth/login" />

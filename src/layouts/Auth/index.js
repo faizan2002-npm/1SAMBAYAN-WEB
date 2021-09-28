@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useLocation, Route, Switch, Redirect } from "react-router-dom";
+import { useLocation, Route, Switch, Redirect,useHistory } from "react-router-dom";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
 
@@ -15,7 +15,15 @@ import "../../assets/scss/argon-dashboard-react.scss"
 const Auth = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
-
+  const history = useHistory();
+  if (localStorage.getItem("TOKEN")) {
+    history.push("/admin");
+  } else {
+    // var pathName = window.location.pathname;
+    // if (location.pathname.indexOf('/admin') > -1) {
+    //   history.push("/login");
+    // }
+  }
   React.useEffect(() => {
     document.body.classList.add("bg-default");
     return () => {

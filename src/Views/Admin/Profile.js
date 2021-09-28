@@ -2,10 +2,38 @@ import Header from "../../components/Admin/Headers/Header";
 import { Formik, Form, Field as Input, ErrorMessage } from "formik";
 
 import { Container, Card, Row, Col, CardBody, Label, FormGroup, Button } from 'reactstrap';
-// import React, { useState } from 'react';
+import { getRequest } from "../../api/request";
+import React, { useState, useEffect } from 'react';
+import { putRequest } from './../../api/request';
 
 const EditProfile = () => {
+  const [profileData, setProfileData] = useState()
+  const getAdminProfile = async () => {
+    try {
+      const token = localStorage.getItem("TOKEN");
+      // console.log("token", token);
+      // var params = props.location.search.slice(5);
+      const response = await getRequest(
+        `/api/secure/user/profile`,
+        token
+      );
+      console.log("setProfileData", response);
+      setProfileData({
+        admin_firstName: response.result.data.user.firstName,
+        admin_lastName: response.result.data.user.lastName,
+        admin_email: response.result.data.user.email,
+        admin_phone: response.result.data.user.phone,
+        admin_pic: '',
+      });
+      console.log("Get Profile Response", response.result);
+    } catch (error) {
+      console.log("Get Profile Error", error.message);
+    }
+  };
 
+  useEffect(() => {
+    getAdminProfile();
+  }, []);
   return (
     <>
       <Header />
@@ -15,46 +43,65 @@ const EditProfile = () => {
             <Card className="shadow">
               <CardBody>
                 <Formik
-                  initialValues={{
-                    admin_name: "",
-                    admin_email: "",
-                    admin_phone: "",
-                    admin_pic: "",
-                  }}
+                  // initialValues={{
+                  //   admin_name: "",
+                  //   admin_email: "",
+                  //   admin_phone: "",
+                  //   admin_pic: "",
+                  // }}
+                  enableReinitialize={true}
+                  initialValues={profileData}
                   onSubmit={async (values) => {
-                    console.log(values);
+                    // console.log("values",values);
+                    const token = localStorage.getItem("TOKEN");
+                    const APIresponse = {
+                      props: {
+                        firstName: values.admin_firstName,
+                        lastName: values.admin_lastName,
+                        email: values.admin_email,
+                        phone: values.admin_phone,
+                        image: '',
+                      }
+                    };
+                    // console.log('Pre Post APIresponse', JSON.stringify(APIresponse));
+                    try {
+                      const response = await putRequest(
+                        "/api/secure/user/update-profile",
+                        token,
+                        APIresponse
+                      );
 
-                    // try {
-                    //   const response = await postRequestForm(
-                    //     "/api/auth/login",
-                    //     "",
-                    //     values
-                    //   );
-                    //   localStorage.setItem(
-                    //     "TOKEN",
-                    //     response.result.data.token
-                    //   );
-                    //   // console.log('TOKEN', response.result .data.token);
-                    //   console.log("status", response.result.status);
-                    //   if (response.result.status === 200) {
-                    //     console.log("logged in!");
-                    //     if (response.result.data.user.type === "teacher") {
-                    //       // navigate("TeacherDashboard");
-                    //       teacherLoginRedirect();
-                    //     }
-                    //   }
-                    // } catch (error) {
-                    //   console.log("Login APi error", error.message);
-                    // }
+                      // console.log("status", response);
+                      if (response.result.status === 200) {
+                        alert('Updated');
+                        //   console.log("logged in!");
+                        //   if (response.result.data.user.type === "teacher") {
+                        //     // navigate("TeacherDashboard");
+                        //     teacherLoginRedirect();
+                        //   }
+                      }
+                    } catch (error) {
+                      console.log("Set Profile APi error", error.message);
+                    }
                   }}
                 >
                   <Form>
                     <Row>
                       <Col lg={6} md={6} xs={12}>
                         <FormGroup className="mb-3">
-                          <Label>Name</Label>
+                          <Label>First Name</Label>
                           <Input
-                            name="admin_name"
+                            name="admin_firstName"
+                            type="text"
+                            placeholder="Name"
+                            className="form-control" />
+                        </FormGroup>
+                      </Col>
+                      <Col lg={6} md={6} xs={12}>
+                        <FormGroup className="mb-3">
+                          <Label>Last Name</Label>
+                          <Input
+                            name="admin_lastName"
                             type="text"
                             placeholder="Name"
                             className="form-control" />
@@ -95,7 +142,7 @@ const EditProfile = () => {
                         </Button>
                       </Col>
                     </Row>
-                  </Form> 
+                  </Form>
                 </Formik>
               </CardBody>
             </Card>

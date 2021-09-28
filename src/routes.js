@@ -42,7 +42,7 @@ import ListEvent from './Views/Admin/Events/ListEvent';
 import CreatePost from './Views/Admin/Posts/CreatePost';
 import CreateEvent from './Views/Admin/Events/CreateEvent';
 import CreateCommunity from './Views/Admin/Communities/CreateCommunity';
-// import CreateCandidate from './Views/Admin/Candidates/CreateCandidate';
+import CreateCandidate from './Views/Admin/Candidates/CreateCandidate';
 import CreateParty from './Views/Admin/Parties/CreateParty';
 
 function _Dashboard() {
@@ -211,7 +211,7 @@ function _ListCandidates() {
 }
 function _CreateCandidate() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Add New Candidate`)
-  // return <CreateCandidate/>
+  return <CreateCandidate/>
 }
 function _ListParties() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | All Parties`)

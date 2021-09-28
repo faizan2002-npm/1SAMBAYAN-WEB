@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useLocation, Route, Switch, Redirect } from "react-router-dom";
+import { useLocation, Route, Switch, Redirect, useHistory } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
@@ -19,17 +19,25 @@ import "../../assets/scss/custom.scss"
 const Admin = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
+  const history = useHistory();
 
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
   }, [location]);
-
+  if (localStorage.getItem("TOKEN")) {
+    // console.log(localStorage.getItem("TOKEN"));
+  } else {
+    var pathName = window.location.pathname;
+    if (location.pathname.indexOf('/admin') > -1) {
+      history.push("/login");
+    }
+  }
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
-        if(prop.subMenu){
+        if (prop.subMenu) {
           return prop.subMenu.map((prop, key) => {
             return (
               <Route exact path={prop.layout + prop.path} component={prop.component} key={key} />

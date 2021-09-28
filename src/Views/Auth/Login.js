@@ -4,24 +4,92 @@ import {
   Card,
   CardBody,
   FormGroup,
-  Form,
-  Input,
   InputGroupAddon,
   InputGroupText,
   InputGroup,
   Row,
   Col,
 } from "reactstrap";
+import { useHistory } from "react-router-dom";
 
+import { Formik, Form, Field as Input, ErrorMessage } from "formik";
+import { postRequestForm } from "../../api/request";
+import { Link } from 'react-router-dom';
 const Login = () => {
+  const history = useHistory();
 
+  function userLoginRedirect(role) {
+    if (role === 'admin') {
+      history.push("/admin");
+    } else {
+      // history.push("/admin");
+    }
+  }
+
+  const validate = (values) => {
+    const errors = {};
+    if (!values.email) {
+      errors.email = "Email is Required";
+    }
+    if (!values.password) {
+      errors.password = "password is Required";
+    }
+
+    return errors;
+  };
   return (
-      <>
-        <Col lg="5" md="7">
-          <Card className="bg-secondary shadow border-0">
+    <>
+      <Col lg="5" md="7">
+        <Card className="bg-secondary shadow border-0">
 
-            <CardBody className="px-lg-5 py-lg-5">
-              <Form role="form">
+          <CardBody className="px-lg-5 py-lg-5">
+            <Formik
+              initialValues={{
+                email: "",
+                password: "",
+              }}
+              onSubmit={async (values, {
+                setSubmitting,
+                setErrors,
+                resetForm /* setValues and other goodies */,
+              }) => {
+                // console.log(values);
+                const APIresponse = {
+                  email: values.email,
+                  password: values.password,
+                };
+                try {
+
+                  const response = await postRequestForm(
+                    "/api/pub/auth/login",
+                    "",
+                    APIresponse
+                  );
+
+                  // localStorage.setItem(
+                  //   "TOKEN",
+                  //   response.result.data.token
+                  // );
+                  // console.log('TOKEN', response.result .data.token);
+                  // console.log("status", response.error.response);
+                  if (response.result.status === 200) {
+                    console.log("logged in!");
+                    console.log("status", response);
+                    localStorage.setItem(
+                      "TOKEN",
+                      response.result.data.token
+                    );
+                    // if (response.result.data.user.type === "teacher") {
+                    // navigate("TeacherDashboard");
+                    userLoginRedirect(response.result.data.user.role);
+                    // }
+                  }
+                } catch (error) {
+                  console.log("Login APi error", error);
+                }
+              }}
+            >
+              <Form>
                 <FormGroup className="mb-3">
                   <InputGroup className="input-group-alternative">
                     <InputGroupAddon addonType="prepend">
@@ -30,9 +98,10 @@ const Login = () => {
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input
-                      placeholder="Email"
+                      name="email"
                       type="email"
-                      autoComplete="new-email"
+                      placeholder="Email"
+                      className="form-control"
                     />
                   </InputGroup>
                 </FormGroup>
@@ -44,13 +113,14 @@ const Login = () => {
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input
-                      placeholder="Password"
+                      name="password"
                       type="password"
-                      autoComplete="new-password"
+                      placeholder="Password"
+                      className="form-control"
                     />
                   </InputGroup>
                 </FormGroup>
-                <div className="custom-control custom-control-alternative custom-checkbox">
+                {/* <div className="custom-control custom-control-alternative custom-checkbox">
                   <input
                     className="custom-control-input"
                     id=" customCheckLogin"
@@ -62,28 +132,37 @@ const Login = () => {
                   >
                     <span className="text-muted">Remember me</span>
                   </label>
-                </div>
+                </div> */}
                 <div className="text-center">
-                  <Button className="my-4" color="primary" type="button">
+                  <Button className="mt-4" color="primary" type="submit">
                     Sign in
                   </Button>
                 </div>
               </Form>
-            </CardBody>
-          </Card>
-          <Row className="mt-3">
-            <Col className="text-center" xs="12">
-              <a
-                className="text-light"
-                to="/resetPassword"
-              >
-                <small>Forgot password?</small>
-              </a>
-            </Col>
-          </Row>
-        </Col>
-      </>
-      );
-  };
+            </Formik>
+          </CardBody>
+        </Card>
+        <Row className="mt-3">
+          <Col className="text-center" xs="12">
+            <Link
+              className="text-light"
+              to="/"
+            >
+              <small>Forgot password?</small>
+            </Link>
+          </Col>
+          <Col className="text-center mt-2" xs="12">
+            <Link
+              className="text-light"
+              to="/"
+            >
+              <small>Back to 1Sambayan</small>
+            </Link>
+          </Col>
+        </Row>
+      </Col>
+    </>
+  );
+};
 
-      export default Login;
+export default Login;
