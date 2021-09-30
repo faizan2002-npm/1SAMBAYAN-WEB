@@ -85,6 +85,13 @@ const Auth = (props) => {
                     <p className="text-lead text-white">
                       Please enter the OTP that has been sent on your Email Address
                     </p>
+                  </> : (location.pathname === '/auth/setNewPassword') ? <>
+                    <h1 className="text-white">
+                      Enter New Password
+                    </h1>
+                    <p className="text-lead text-white">
+                      Please enter the new password and try a Login
+                    </p>
                   </> : ''
                   }
 

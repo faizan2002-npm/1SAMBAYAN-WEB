@@ -50,6 +50,7 @@ ReactDOM.render(
       <Redirect from="/editProfile" to="/admin/EditProfile" />
       <Redirect from="/auth" to="/auth/login" />
       <Redirect from="/login" to="/auth/login" />
+      <Redirect from="/setNewPassword" to="/auth/setNewPassword" />
       <Redirect from="/resetPassword" to="/auth/resetPassword" />
       <Redirect from="/otpAuthentication" to="/auth/otpAuthentication" />
     </Switch>

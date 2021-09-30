@@ -44,6 +44,7 @@ import CreateEvent from './Views/Admin/Events/CreateEvent';
 import CreateCommunity from './Views/Admin/Communities/CreateCommunity';
 import CreateCandidate from './Views/Admin/Candidates/CreateCandidate';
 import CreateParty from './Views/Admin/Parties/CreateParty';
+import SetNewPassword from "./Views/Auth/SetNewPassword";
 
 function _Dashboard() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Dashboard`)
@@ -52,6 +53,11 @@ function _Dashboard() {
 function _EditProfile() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Edit Profile`)
   return <EditProfile />
+}
+// _SetNewPassword
+function _SetNewPassword() {
+  useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Set New Password`)
+  return <SetNewPassword />
 }
 function _HomeSetting() {
   useDocumentTitle(`${siteSettings.SiteSettings[0].SITE_TITLE} | Admin | Home Setting`)
@@ -242,6 +248,13 @@ var routes = [
     name: "Forget Password",
     icon: "ni ni-key-25 text-info",
     component: _ForgetPassword,
+    layout: "/auth",
+  },
+  {
+    path: "/setNewPassword",
+    name: "Set New Password",
+    icon: "ni ni-key-25 text-info",
+    component: _SetNewPassword,
     layout: "/auth",
   },
   //Admin Portal

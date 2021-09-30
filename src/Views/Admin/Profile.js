@@ -23,7 +23,7 @@ const EditProfile = () => {
         admin_lastName: response.result.data.user.lastName,
         admin_email: response.result.data.user.email,
         admin_phone: response.result.data.user.phone,
-        admin_pic: '',
+        admin_pic: response.result.data.user.profileImage,
       });
       console.log("Get Profile Response", response.result);
     } catch (error) {

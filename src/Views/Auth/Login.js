@@ -146,7 +146,7 @@ const Login = () => {
           <Col className="text-center" xs="12">
             <Link
               className="text-light"
-              to="/"
+              to="/resetPassword"
             >
               <small>Forgot password?</small>
             </Link>
